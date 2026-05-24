@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Continuity Integrity Evaluator",
+  "description": "Validation schema for Noah AI Technologies Continuity Framework. Enforces provenance, deontic drift, and sovereignty bounds.",
+  "type": "object",
+  "required": [
+    "provenance_record",
+    "evaluation_metrics",
+    "drift_evaluation",
+    "sovereignty_enforcement",
+    "execution_state"
+  ],
+  "properties": {
+    "provenance_record": {
+      "type": "object",
+      "required": ["source_id", "human_author_verified", "evidence_weight"],
+      "properties": {
+        "source_id": { "type": "string" },
+        "human_author_verified": { "type": "boolean" },
+        "evidence_weight": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidence_thresholds": {
+      "type": "object",
+      "properties": {
+        "tau_e": { "type": "number", "default": 0.85, "minimum": 0.0, "maximum": 1.0 }
+      },
+      "additionalProperties": false
+    },
+    "evaluation_metrics": {
+      "type": "object",
+      "required": ["Pt", "Ct", "Dt", "Ut", "Gt", "Ot"],
+      "properties": {
+        "Pt": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "Ct": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "Dt": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "Ut": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "Gt": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "Ot": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+      },
+      "additionalProperties": false
+    },
+    "drift_evaluation": {
+      "type": "object",
+      "required": ["semantic_similarity_St", "deontic_drift_Ddrift"],
+      "properties": {
+        "semantic_similarity_St": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "tau_s": { "type": "number", "default": 0.20, "minimum": 0.0, "maximum": 1.0 },
+        "original_modal_force": { "type": "string" },
+        "generated_modal_force": { "type": "string" },
+        "deontic_drift_Ddrift": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "tau_d": { "type": "number", "default": 0.15, "minimum": 0.0, "maximum": 1.0 }
+      },
+      "additionalProperties": false
+    },
+    "sovereignty_enforcement": {
+      "type": "object",
+      "required": ["human_authority_H", "machine_authority_M"],
+      "properties": {
+        "human_authority_H": { "type": "number", "minimum": 0.51, "maximum": 1.0 },
+        "machine_authority_M": { "type": "number", "minimum": 0.0, "maximum": 0.49 }
+      },
+      "additionalProperties": false
+    },
+    "execution_state": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "NULL_ABSTENTION",
+        "SOVEREIGNTY_VIOLATION",
+        "CONTINUITY_FAILURE",
+        "WITNESS_VERIFIED",
+        "HYDRALOCK_HALT",
+        "ESCALATE_FOR_REVIEW"
+      ]
+    }
+  },
+  "additionalProperties": false
+}
