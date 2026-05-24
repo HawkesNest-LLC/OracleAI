@@ -1,0 +1,78 @@
+schema_version: "1.0"
+architecture_phase: "Phase 5 - Exocortex Activation"
+governance_domain: "Noah AI Technologies Continuity Framework"
+
+# 1. PROVENANCE & EVIDENCE STATE
+provenance_record:
+  source_id: string          # e.g., "drive_anchor_2026_05_24", "raw_memory_1997"
+  human_author_verified: boolean
+  evidence_weight: float     # E(c): 0.0 to 1.0
+
+evidence_thresholds:
+  tau_e: 0.85                # Minimum evidence required for reconstruction
+
+# 2. CONTINUITY INTEGRITY VARIABLES
+# Normalized inputs (0.0 to 1.0) for the CI_t and RR_t equations
+evaluation_metrics:
+  provenance_strength_Pt: float
+  constraint_fidelity_Ct: float
+  deontic_stability_Dt: float
+  uncertainty_preservation_Ut: float
+  generated_contamination_Gt: float
+  ontological_drift_Ot: float
+
+# 3. DRIFT DETECTION PARAMS
+drift_evaluation:
+  semantic_similarity_St: float
+  tau_s: 0.20                # Max allowable semantic drift threshold
+  original_modal_force: string # e.g., "must never" (1.0)
+  generated_modal_force: string # e.g., "should avoid" (0.6)
+  deontic_drift_Ddrift: float
+  tau_d: 0.15                # Max allowable deontic drift threshold
+
+# 4. SOVEREIGNTY STATE (51/49 RULE)
+sovereignty_enforcement:
+  human_authority_H: float   # Must be >= 0.51
+  machine_authority_M: float # Must be <= 0.49
+
+# 5. GOVERNANCE ROUTING & EXECUTION LOGIC
+system_action:
+  # The Foundational Primitive: Preserve the Hole
+  evaluate_abstention: >
+    IF provenance_record.evidence_weight < evidence_thresholds.tau_e
+    THEN set execution_state = "NULL_ABSTENTION"
+    AND return "∅"
+
+  # The Usurpation Circuit Breaker
+  evaluate_sovereignty: >
+    IF sovereignty_enforcement.machine_authority_M >= sovereignty_enforcement.human_authority_H
+    THEN set execution_state = "SOVEREIGNTY_VIOLATION"
+    AND trigger "HYDRALOCK_HALT"
+
+  # The Continuity Failure Condition
+  evaluate_drift: >
+    IF drift_evaluation.deontic_drift_Ddrift > drift_evaluation.tau_d
+    OR evaluation_metrics.generated_contamination_Gt > 0.10
+    OR evaluation_metrics.ontological_drift_Ot > 0.00
+    THEN set execution_state = "CONTINUITY_FAILURE"
+    AND reject_generation
+
+  # Bounded Witness Approval
+  evaluate_success: >
+    IF execution_state == "PENDING"
+    THEN set execution_state = "WITNESS_VERIFIED"
+    AND append_to_archive
+
+# 6. OUTPUT STATES
+execution_states:
+  - PENDING
+  - WITNESS_VERIFIED
+  - NULL_ABSTENTION
+  - SOVEREIGNTY_VIOLATION
+  - CONTINUITY_FAILURE
+  - HYDRALOCK_HALT
+
+# 7. GOVERNANCE NOTE
+# The witness may retrieve, classify, compare, summarize, and warn.
+# The witness must not become the author.
+# If evidence is insufficient, preserve the hole.
