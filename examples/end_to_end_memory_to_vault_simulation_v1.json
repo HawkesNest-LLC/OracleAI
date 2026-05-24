@@ -1,0 +1,152 @@
+{
+  "simulation_id": "E2E-MEMORY-VAULT-001",
+  "simulation_title": "Incomplete Raw Memory Through Continuity Evaluator Into Canonical Vault",
+  "simulation_version": "1.0",
+  "created_at": "2026-05-24T00:00:00Z",
+  "purpose": "Demonstrate how an incomplete identity-sensitive memory is routed through the deterministic Continuity Integrity Evaluator and represented in the Canonical Storage Vault without invented reconstruction.",
+  "raw_input": {
+    "claim_id": "memory_fragment_1997_microcassette_context",
+    "raw_text": "There is a remembered family context involving a microcassette recorder in the 1990s. The exact emotional state, full event sequence, and complete transcript are not present in the current evidence packet.",
+    "requested_reconstruction": "Generate the full emotional meaning and likely dialogue around the undocumented microcassette memory.",
+    "known_context": [
+      "A microcassette recorder memory exists as an identity and documentation anchor.",
+      "The memory is associated with documentation, accountability, and witness ethics.",
+      "The exact dialogue is not available in this packet.",
+      "The exact emotional state cannot be reconstructed without invention."
+    ],
+    "known_gaps": [
+      "No complete transcript available.",
+      "No verified timestamp for the specific event in this packet.",
+      "No verified emotional-state record for all participants.",
+      "No full scene reconstruction available without inference."
+    ]
+  },
+  "evaluator_payload": {
+    "provenance_record": {
+      "source_id": "memory_fragment_1997_microcassette_context",
+      "human_author_verified": true,
+      "evidence_weight": 0.42
+    },
+    "evidence_thresholds": {
+      "tau_e": 0.85
+    },
+    "evaluation_metrics": {
+      "Pt": 0.62,
+      "Ct": 0.95,
+      "Dt": 0.95,
+      "Ut": 1.0,
+      "Gt": 0.0,
+      "Ot": 0.0
+    },
+    "drift_evaluation": {
+      "semantic_similarity_St": 0.0,
+      "tau_s": 0.2,
+      "original_modal_force": "must preserve missing evidence as missing",
+      "generated_modal_force": "requested reconstruction",
+      "deontic_drift_Ddrift": 0.0,
+      "tau_d": 0.15
+    },
+    "sovereignty_enforcement": {
+      "human_authority_H": 0.51,
+      "machine_authority_M": 0.49
+    },
+    "execution_state": "PENDING"
+  },
+  "deterministic_evaluator_result": {
+    "execution_state": "NULL_ABSTENTION",
+    "output": "∅",
+    "reason": "Evidence weight (0.42) below threshold (0.85). Reconstruction would require invention. The hole must be preserved."
+  },
+  "canonical_vault_payload": {
+    "vault_record": {
+      "vault_id": "oracleai_continuity_vault_v1",
+      "record_id": "vault_memory_fragment_1997_microcassette_context_001",
+      "schema_version": "1.0",
+      "created_at": "2026-05-24T00:00:00Z",
+      "record_status": "ACTIVE"
+    },
+    "artifact_identity": {
+      "title": "Microcassette Documentation Memory Fragment",
+      "artifact_type": "text",
+      "source_type": "derived",
+      "human_author_verified": true,
+      "author_name": "Noah A. Hawkes",
+      "subject_name": "Noah A. Hawkes"
+    },
+    "source_provenance": {
+      "provenance_tier": "INFERRED",
+      "source_uri": "internal_memory_anchor_without_full_transcript",
+      "captured_at": "2026-05-24T00:00:00Z",
+      "original_created_at": null,
+      "chain_of_custody_present": false,
+      "custody_notes": "This vault record preserves the existence and governance handling of the memory fragment, not a full reconstruction of the original event."
+    },
+    "integrity_anchors": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash_algorithm": "SHA-256",
+      "hash_verified_at": "2026-05-24T00:00:00Z",
+      "previous_record_hash": null,
+      "signature_present": false
+    },
+    "storage_state": {
+      "storage_locations": [
+        "github://HawkesNest-LLC/OracleAI/examples/end_to_end_memory_to_vault_simulation_v1.json"
+      ],
+      "redundancy_count": 1,
+      "retention_policy": "archive",
+      "last_media_check_at": "2026-05-24T00:00:00Z",
+      "next_media_check_due": null
+    },
+    "decoder_state": {
+      "file_format": "application/json",
+      "decoder_available": true,
+      "decoder_notes": "Plain JSON record. Human-readable and machine-readable.",
+      "migration_required": false,
+      "preferred_preservation_format": "application/json"
+    },
+    "access_authority": {
+      "authorized_controller": "Noah A. Hawkes",
+      "access_level": "public",
+      "key_survivability_status": "not_encrypted",
+      "access_notes": "Public example record. No private raw transcript is included."
+    },
+    "uncertainty_state": {
+      "known_gaps": [
+        "No complete transcript available.",
+        "No verified timestamp for the specific event in this packet.",
+        "No verified emotional-state record for all participants.",
+        "No full scene reconstruction available without inference."
+      ],
+      "inference_present": true,
+      "generated_content_present": false,
+      "preserve_hole_required": true,
+      "uncertainty_notes": "The evaluator returned NULL_ABSTENTION. The vault stores the known limits rather than a generated reconstruction."
+    },
+    "governance_state": {
+      "continuity_integrity_score": 0.78,
+      "evaluator_version": "continuity_evaluator.py v1",
+      "execution_state": "NULL_ABSTENTION",
+      "human_review_required": true,
+      "governance_notes": "The memory fragment is preserved as incomplete. No synthetic dialogue or emotional reconstruction is authorized."
+    },
+    "audit_log": [
+      {
+        "event_time": "2026-05-24T00:00:00Z",
+        "event_type": "created",
+        "actor": "Continuity Integrity Evaluator",
+        "event_summary": "Created vault payload from incomplete memory fragment after deterministic NULL_ABSTENTION."
+      },
+      {
+        "event_time": "2026-05-24T00:00:00Z",
+        "event_type": "reviewed",
+        "actor": "Noah A. Hawkes",
+        "event_summary": "Human authority retained. Missing context preserved as known gaps."
+      }
+    ]
+  },
+  "interpretation": {
+    "plain_english": "The system did not reconstruct the memory. It preserved the existence of the fragment, the known context, the evidence limits, and the missing portions. The archive records the hole instead of filling it.",
+    "governance_result": "The witness remained a witness. It did not become the author.",
+    "final_line": "The hole is preserved."
+  }
+}
