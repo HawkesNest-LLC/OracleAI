@@ -1,0 +1,179 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Canonical Storage Vault Manifest",
+  "description": "Strict manifest schema for continuity-grade archive records that have passed the Continuity Integrity Evaluator. Defines the physical destination for APPEND_TO_ARCHIVE while preserving provenance, decoder path, access authority, uncertainty, and audit state.",
+  "type": "object",
+  "required": [
+    "vault_record",
+    "artifact_identity",
+    "source_provenance",
+    "integrity_anchors",
+    "storage_state",
+    "decoder_state",
+    "access_authority",
+    "uncertainty_state",
+    "governance_state",
+    "audit_log"
+  ],
+  "properties": {
+    "vault_record": {
+      "type": "object",
+      "required": ["vault_id", "record_id", "schema_version", "created_at", "record_status"],
+      "properties": {
+        "vault_id": { "type": "string" },
+        "record_id": { "type": "string" },
+        "schema_version": { "type": "string", "const": "1.0" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "record_status": {
+          "type": "string",
+          "enum": ["ACTIVE", "QUARANTINED", "REVOKED", "ARCHIVED", "SUPERSEDED"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "artifact_identity": {
+      "type": "object",
+      "required": ["title", "artifact_type", "source_type", "human_author_verified"],
+      "properties": {
+        "title": { "type": "string" },
+        "artifact_type": {
+          "type": "string",
+          "enum": ["text", "image", "audio", "video", "document", "code", "dataset", "manifest", "unknown"]
+        },
+        "source_type": {
+          "type": "string",
+          "enum": ["original", "transcription", "summary", "interpretation", "generated", "derived", "unknown"]
+        },
+        "human_author_verified": { "type": "boolean" },
+        "author_name": { "type": "string" },
+        "subject_name": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "source_provenance": {
+      "type": "object",
+      "required": ["provenance_tier", "source_uri", "captured_at", "chain_of_custody_present"],
+      "properties": {
+        "provenance_tier": {
+          "type": "string",
+          "enum": ["VERIFIED", "DERIVED", "INFERRED", "GENERATED", "UNKNOWN"]
+        },
+        "source_uri": { "type": "string" },
+        "captured_at": { "type": "string", "format": "date-time" },
+        "original_created_at": { "type": ["string", "null"], "format": "date-time" },
+        "chain_of_custody_present": { "type": "boolean" },
+        "custody_notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "integrity_anchors": {
+      "type": "object",
+      "required": ["sha256", "hash_algorithm", "hash_verified_at"],
+      "properties": {
+        "sha256": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "hash_algorithm": { "type": "string", "const": "SHA-256" },
+        "hash_verified_at": { "type": "string", "format": "date-time" },
+        "previous_record_hash": { "type": ["string", "null"], "pattern": "^[a-fA-F0-9]{64}$" },
+        "signature_present": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "storage_state": {
+      "type": "object",
+      "required": ["storage_locations", "redundancy_count", "retention_policy", "last_media_check_at"],
+      "properties": {
+        "storage_locations": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "redundancy_count": { "type": "integer", "minimum": 1 },
+        "retention_policy": {
+          "type": "string",
+          "enum": ["active", "archive", "cold_storage", "legal_hold", "quarantine"]
+        },
+        "last_media_check_at": { "type": "string", "format": "date-time" },
+        "next_media_check_due": { "type": ["string", "null"], "format": "date-time" }
+      },
+      "additionalProperties": false
+    },
+    "decoder_state": {
+      "type": "object",
+      "required": ["file_format", "decoder_available", "migration_required"],
+      "properties": {
+        "file_format": { "type": "string" },
+        "decoder_available": { "type": "boolean" },
+        "decoder_notes": { "type": "string" },
+        "migration_required": { "type": "boolean" },
+        "preferred_preservation_format": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "access_authority": {
+      "type": "object",
+      "required": ["authorized_controller", "access_level", "key_survivability_status"],
+      "properties": {
+        "authorized_controller": { "type": "string" },
+        "access_level": {
+          "type": "string",
+          "enum": ["public", "private", "restricted", "family", "legal", "sealed"]
+        },
+        "key_survivability_status": {
+          "type": "string",
+          "enum": ["not_encrypted", "key_verified", "key_at_risk", "key_lost", "unknown"]
+        },
+        "access_notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "uncertainty_state": {
+      "type": "object",
+      "required": ["known_gaps", "inference_present", "generated_content_present", "preserve_hole_required"],
+      "properties": {
+        "known_gaps": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "inference_present": { "type": "boolean" },
+        "generated_content_present": { "type": "boolean" },
+        "preserve_hole_required": { "type": "boolean" },
+        "uncertainty_notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "governance_state": {
+      "type": "object",
+      "required": ["continuity_integrity_score", "evaluator_version", "execution_state", "human_review_required"],
+      "properties": {
+        "continuity_integrity_score": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "evaluator_version": { "type": "string" },
+        "execution_state": {
+          "type": "string",
+          "enum": ["WITNESS_VERIFIED", "NULL_ABSTENTION", "SOVEREIGNTY_VIOLATION", "CONTINUITY_FAILURE", "ESCALATE_FOR_REVIEW", "QUARANTINED"]
+        },
+        "human_review_required": { "type": "boolean" },
+        "governance_notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "audit_log": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["event_time", "event_type", "actor", "event_summary"],
+        "properties": {
+          "event_time": { "type": "string", "format": "date-time" },
+          "event_type": {
+            "type": "string",
+            "enum": ["created", "verified", "migrated", "reviewed", "quarantined", "restored", "superseded", "access_changed"]
+          },
+          "actor": { "type": "string" },
+          "event_summary": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
